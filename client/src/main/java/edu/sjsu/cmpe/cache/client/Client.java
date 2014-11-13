@@ -15,15 +15,15 @@ public class Client {
         caches.add(new DistributedCacheService("http://localhost:3001"));
         caches.add(new DistributedCacheService("http://localhost:3002"));
 
-        String[] toPut = {"a","b","c","d","e","f","g","h","i","j"};
+        String[] toPut = {"0","a","b","c","d","e","f","g","h","i","j"};
         for(int i=1;i<11;i++){
-        	int bucket = Hashing.consistentHash(Hashing.md5().hashString("someId"), caches.size());
+        	int bucket = Hashing.consistentHash(Hashing.md5().hashString(Integer.toString(i)), caches.size());
         	caches.get(bucket).put(i,toPut[i]);
         	System.out.println("put("+bucket+") => "+toPut[i]);
         }
         
         for(int i=1;i<11;i++){
-        	int bucket = Hashing.consistentHash(Hashing.md5().hashString("someId"), caches.size());
+        	int bucket = Hashing.consistentHash(Hashing.md5().hashString(Integer.toString(i)), caches.size());
         	String value = caches.get(bucket).get(i);
         	System.out.println("get("+bucket+") => "+value);
         }
